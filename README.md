@@ -1,2 +1,2 @@
 # money
-money app
+money application
