@@ -1,0 +1,204 @@
+OFXHEADER:100DATA:OFXSGMLVERSION:102SECURITY:NONEENCODING:USASCIICHARSET:1252COMPRESSION:NONEOLDFILEUID:NONENEWFILEUID:NONE<OFX>
+   <SIGNONMSGSRSV1>
+      <SONRS>
+         <STATUS>
+            <CODE>0</CODE>
+            <SEVERITY>INFO</SEVERITY>
+         </STATUS>
+         <DTSERVER>20220321120000[-3:BRT]</DTSERVER>
+         <LANGUAGE>POR</LANGUAGE>
+         <FI>
+            <ORG>Banco do Brasil</ORG>
+            <FID>1</FID>
+         </FI>
+      </SONRS>
+   </SIGNONMSGSRSV1>
+   <BANKMSGSRSV1>
+      <STMTTRNRS>
+         <TRNUID>1</TRNUID>
+         <STATUS>
+            <CODE>0</CODE>
+            <SEVERITY>INFO</SEVERITY>
+         </STATUS>
+         <STMTRS>
+            <CURDEF>BRL</CURDEF>
+            <BANKACCTFROM>
+               <BANKID>1</BANKID>
+               <BRANCHID>93-0</BRANCHID>
+               <ACCTID>70251-X</ACCTID>
+               <ACCTTYPE>CHECKING</ACCTTYPE>
+            </BANKACCTFROM>
+            <BANKTRANLIST>
+               <DTSTART>20220225120000[-3:BRT]</DTSTART>
+               <DTEND>20220321120000[-3:BRT]</DTEND>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220302120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-130.00</TRNAMT>
+                  <FITID>202203021130000</FITID>
+                  <CHECKNUM>000000182970</CHECKNUM>
+                  <REFNUM>182.970</REFNUM>
+                  <MEMO>Compra com Cartão - 26/02 23:02 MOTOR STEAK</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220302120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-8.53</TRNAMT>
+                  <FITID>2022030218530</FITID>
+                  <CHECKNUM>000000270333</CHECKNUM>
+                  <REFNUM>270.333</REFNUM>
+                  <MEMO>Compra com Cartão - 01/03 19:32 PRINCESINHA DO MARAC</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220302120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-30.00</TRNAMT>
+                  <FITID>20220302130000</FITID>
+                  <CHECKNUM>000000030201</CHECKNUM>
+                  <REFNUM>30.201</REFNUM>
+                  <MEMO>Pix - Enviado - 26/02 16:37 Joao Victor Moreira Tostes</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220302120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-4227.06</TRNAMT>
+                  <FITID>2022030214227060</FITID>
+                  <CHECKNUM>000000030202</CHECKNUM>
+                  <REFNUM>30.202</REFNUM>
+                  <MEMO>Pagamento de Boleto - NU PAGAMENTOS SA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220307120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>6910.92</TRNAMT>
+                  <FITID>2022030706910920</FITID>
+                  <CHECKNUM>093400070251</CHECKNUM>
+                  <REFNUM>600.093.400.070.251</REFNUM>
+                  <MEMO>Transferência recebida - 06/03 0093      70251-X ANDRE DE LIMA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220307120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-8.90</TRNAMT>
+                  <FITID>2022030718900</FITID>
+                  <CHECKNUM>000000139163</CHECKNUM>
+                  <REFNUM>139.163</REFNUM>
+                  <MEMO>Compra com Cartão - 07/03 10:52 MEGA MATTE</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220307120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-7236.66</TRNAMT>
+                  <FITID>2022030717236660</FITID>
+                  <CHECKNUM>093510070251</CHECKNUM>
+                  <REFNUM>600.093.510.070.251</REFNUM>
+                  <MEMO>Aplicação Poupança - 06/03 0093  510070251-2 ANDRE DE LIMA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220307120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-1635.83</TRNAMT>
+                  <FITID>2022030711635830</FITID>
+                  <CHECKNUM>000000030701</CHECKNUM>
+                  <REFNUM>30.701</REFNUM>
+                  <MEMO>Pagamento de Boleto - QUINTO ANDAR S I LTDA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220308120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-281.59</TRNAMT>
+                  <FITID>202203081281590</FITID>
+                  <CHECKNUM>000000030801</CHECKNUM>
+                  <REFNUM>30.801</REFNUM>
+                  <MEMO>Pagamento conta luz - LIGHT</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220308120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-139.69</TRNAMT>
+                  <FITID>202203081139690</FITID>
+                  <CHECKNUM>000000030802</CHECKNUM>
+                  <REFNUM>30.802</REFNUM>
+                  <MEMO>Pagamento conta gas - CEG-CIA DISTRIBUIDORA GAS</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220309120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>800.00</TRNAMT>
+                  <FITID>202203090800000</FITID>
+                  <CHECKNUM>093510070251</CHECKNUM>
+                  <REFNUM>93.510.070.251</REFNUM>
+                  <MEMO>Transferido da poupança - 09/03 0093      70251-X ANDRE DE LIMA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220309120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>450.00</TRNAMT>
+                  <FITID>202203090450000</FITID>
+                  <CHECKNUM>001071834260</CHECKNUM>
+                  <REFNUM>1.071.834.260</REFNUM>
+                  <MEMO>Pix - Recebido - 09/03 18:04 00015033478770 LOHRANA DUA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220309120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-100.00</TRNAMT>
+                  <FITID>202203091100000</FITID>
+                  <CHECKNUM>000000030901</CHECKNUM>
+                  <REFNUM>30.901</REFNUM>
+                  <MEMO>Pix - Enviado - 09/03 07:26 Lohrana Duarte Nascimento</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220309120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-160.00</TRNAMT>
+                  <FITID>202203091160000</FITID>
+                  <CHECKNUM>000000030902</CHECKNUM>
+                  <REFNUM>30.902</REFNUM>
+                  <MEMO>Pix - Enviado - 09/03 13:33 Juliana Silva</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220309120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-20.00</TRNAMT>
+                  <FITID>20220309120000</FITID>
+                  <CHECKNUM>000000030903</CHECKNUM>
+                  <REFNUM>30.903</REFNUM>
+                  <MEMO>Pix - Enviado - 09/03 13:36 Distribuidora De Agua Mine</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220309120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-1340.55</TRNAMT>
+                  <FITID>2022030911340550</FITID>
+                  <CHECKNUM>000000030904</CHECKNUM>
+                  <REFNUM>30.904</REFNUM>
+                  <MEMO>Pagamento de Boleto - AD RIO ASSESSORIA IMOB LTDA</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220314120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>-5.00</TRNAMT>
+                  <FITID>2022031415000</FITID>
+                  <CHECKNUM>000000135687</CHECKNUM>
+                  <REFNUM>135.687</REFNUM>
+                  <MEMO>Compra com Cartão - 12/03 09:54 MP *BEBDIASDUDU</MEMO>
+               </STMTTRN>
+               <STMTTRN>
+                  <TRNTYPE>OTHER</TRNTYPE>
+                  <DTPOSTED>20220321120000[-3:BRT]</DTPOSTED>
+                  <TRNAMT>980.00</TRNAMT>
+                  <FITID>202203210980000</FITID>
+                  <CHECKNUM>620000116700</CHECKNUM>
+                  <REFNUM>551.620.000.116.700</REFNUM>
+                  <MEMO>Transferência recebida - 21/03 1620     116700-6 NETCON CONSULT</MEMO>
+               </STMTTRN>
+            </BANKTRANLIST>
+            <LEDGERBAL>
+               <BALAMT>5449.36</BALAMT>
+               <DTASOF>20220321120000[-3:BRT]</DTASOF>
+            </LEDGERBAL>
+         </STMTRS>
+      </STMTTRNRS>
+   </BANKMSGSRSV1>
+</OFX>
