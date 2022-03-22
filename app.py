@@ -1,75 +1,11 @@
+import click
+import hashlib
+import uuid
 from ofxparse import OfxParser
 
-
-import codecs
-with codecs.open('extrato.ofx') as fileobj:
-    ofx = OfxParser.parse(fileobj)
-
-# Account
-account = ofx.account
-print(account.account_id, account.type)
-
-# Statement
-
-statement = account.statement
-print(
-statement.start_date,          # The start date of the transactions
-statement.end_date,            # The end date of the transactions
-statement.balance,             # The money in the account as of the statement date
-# statement.available_balance,   # The money available from the account as of the statement date
-# statement.transactions,
-)        # A list of Transaction objects
-
-# Transaction
-
-for transaction in statement.transactions:
-  print(
-#   transaction.payee,
-#   transaction.type,
-  transaction.date,
-#   transaction.user_date,
-  transaction.amount,
-  transaction.id,
-  transaction.memo,
-#   transaction.sic,
-#   transaction.mcc,
-  transaction.checknum
-  )
-
-# # InvestmentTransaction
-
-# for transaction in statement.transactions:
-#   transaction.type
-#   transaction.tradeDate
-#   transaction.settleDate
-#   transaction.memo
-#   transaction.security      # A Security object
-#   transaction.income_type
-#   transaction.units
-#   transaction.unit_price
-#   transaction.comission
-#   transaction.fees
-#   transaction.total
-#   transaction.tferaction
-
-# # Positions
-
-# for position in statement.positions:
-#   position.security       # A Security object
-#   position.units
-#   position.unit_price
-#   position.market_value
-
-# # Security
-
-# security = transaction.security
-# # or
-# security = position.security
-# security.uniqueid
-# security.name
-# security.ticker
-# security.memo
-
+from database import db
+from application import schemas
+from utils import hash
 # import requests
 # import click
 
@@ -83,3 +19,61 @@ for transaction in statement.transactions:
 #     "date": "2022-03-21"
 # }
 
+# with codecs.open('nubank.ofx') as fileobj:
+#     ofx = OfxParser.parse(fileobj)
+
+# account = ofx.account
+# print(account.account_id, account.type)
+
+# statement = account.statement
+# print(statement.start_date, statement.end_date, statement.balance,)
+
+# for transaction in statement.transactions:
+#   print(transaction.date, transaction.amount, transaction.id, transaction.memo, transaction.checknum)
+
+
+# def getID(string):
+#   hash = hashlib.sha256(string.encode("utf-8"))
+#   return str(uuid.UUID(hash.hexdigest()[::2]))
+
+
+def parseData(filename):
+  with click.open_file(filename, "rb") as fileobj:
+    ofx = OfxParser.parse(fileobj)
+
+  account = ofx.account
+  statement = account.statement
+  accountID = hash.ID(account.account_id)
+  
+  # click.secho("Reading elements from ")
+  # print(statement.start_date, statement.end_date, statement.balance)
+  
+  listOfTransactions = []
+  for transaction in statement.transactions:
+    transactionID = hash.ID(transaction.id)
+    transactionObject = schemas.TransactionBase(
+      id = transactionID.ID,
+      account_id = accountID.ID,
+      date = transaction.date,
+      amount = transaction.amount,
+      memo = transaction.memo
+    )
+    listOfTransactions.append(transactionObject)
+  return listOfTransactions
+
+
+@click.group()
+def main():
+  pass
+
+
+@main.command()
+@click.argument("filename", type=click.Path(exists=True))
+def importdb(filename):
+  transactions = parseData(filename)
+  click.secho(f"{len(transactions)} transactions made")
+  # print(transactions)
+
+
+if __name__ == "__main__":
+  main()  
