@@ -1,11 +1,15 @@
 import click
-import hashlib
-import uuid
 from ofxparse import OfxParser
 
 from database import db
+from database.crud import (
+  CRUDAccount,
+  CRUDTransaction,
+  CRUDType,
+)
 from application import schemas
 from utils import hash
+from utils.handler import DbHandler
 # import requests
 # import click
 
@@ -31,12 +35,6 @@ from utils import hash
 # for transaction in statement.transactions:
 #   print(transaction.date, transaction.amount, transaction.id, transaction.memo, transaction.checknum)
 
-
-# def getID(string):
-#   hash = hashlib.sha256(string.encode("utf-8"))
-#   return str(uuid.UUID(hash.hexdigest()[::2]))
-
-
 def parseData(filename):
   with click.open_file(filename, "rb") as fileobj:
     ofx = OfxParser.parse(fileobj)
@@ -44,10 +42,7 @@ def parseData(filename):
   account = ofx.account
   statement = account.statement
   accountID = hash.ID(account.account_id)
-  
-  # click.secho("Reading elements from ")
-  # print(statement.start_date, statement.end_date, statement.balance)
-  
+
   listOfTransactions = []
   for transaction in statement.transactions:
     transactionID = hash.ID(transaction.id)
@@ -56,10 +51,15 @@ def parseData(filename):
       account_id = accountID.ID,
       date = transaction.date,
       amount = transaction.amount,
-      memo = transaction.memo
+      memo = transaction.memo,
     )
-    listOfTransactions.append(transactionObject)
-  return listOfTransactions
+    listOfTransactions.append(transactionObject)  
+  return schemas.Document(
+    start_date = statement.start_date,
+    end_date = statement.end_date,
+    account_id = accountID.ID,
+    transactions = listOfTransactions
+  )
 
 
 @click.group()
@@ -70,9 +70,44 @@ def main():
 @main.command()
 @click.argument("filename", type=click.Path(exists=True))
 def importdb(filename):
-  transactions = parseData(filename)
-  click.secho(f"{len(transactions)} transactions made")
-  # print(transactions)
+  document = parseData(filename)
+  click.echo(f"Reading transactions from {document.account_id} between {document.start_date} and {document.end_date}")
+  accountID = document.account_id
+  crud = CRUDAccount()
+  dbAccount =  crud.readAccountByID(accountID)
+
+  if not dbAccount:
+    accountName = click.prompt("Account name")
+    accountType = click.prompt("Account Type")
+    typeID = hash.ID(accountType.lower())
+    crud = CRUDType()
+    dbType = crud.readTypeByID(typeID.ID)
+    
+    if not dbType:
+      payload = schemas.TypeBase(
+        id = typeID.ID,
+        name = accountType
+      )
+      dbType = crud.createType(payload)
+     
+    payload = schemas.AccountBase(
+      id = accountID,
+      name = accountName,
+      type_id = typeID.ID
+    )
+    crud = CRUDAccount()
+    dbAccount = crud.createAccount(payload)
+
+  transactions = document.transactions
+  with click.progressbar(transactions,
+                       label="Importing transactions into db",
+                       length=len(transactions)) as bar:
+    for transaction in bar:
+      crud = CRUDTransaction()
+      dbTransaction = crud.readTransactionByID(transaction.id)
+      if not dbTransaction:
+        crud.createTransaction(transaction)
+  click.echo("Completed")
 
 
 if __name__ == "__main__":

@@ -1,12 +1,12 @@
-from typing import List
+from typing import List, Optional
 from datetime import date
 from pydantic import BaseModel, validator
 
 class AccountBase(BaseModel):
     id: str
+    type_id: str
     name: str
-    type: int
-
+    
     class Config:
         orm_mode = True
 
@@ -14,7 +14,7 @@ class AccountBase(BaseModel):
 class TransactionBase(BaseModel):
     id: str
     account_id: str
-    # category_id: str
+    category_id: Optional[str]
     # checknum: str
     # type: int
     date: date
@@ -33,7 +33,32 @@ class CategoryBase(BaseModel):
     id: str
     name: str
 
+    class Config:
+        orm_mode = True
+
+
+class TypeBase(BaseModel):
+    id: str
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
+class Account(BaseModel):
+    id: str
+    type: str
+    name: str
+    
+    class Config:
+        orm_mode = True
+
 
 class Document(BaseModel):
-    account: AccountBase
+    start_date: date
+    end_date: date
+    account_id: str
     transactions: List[TransactionBase]
+
+    class Config:
+        orm_mode = True
