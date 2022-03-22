@@ -7,6 +7,7 @@ Base.metadata.create_all(engine)
 from application import schemas
 from utils.handler import DbHandler
 
+
 class CRUDAccount:
 
     def readAccountByID(self, id: str):
@@ -48,9 +49,14 @@ class CRUDType:
         return dbType
 
 
-
 class CRUDTransaction:
 
+    def readTransactions():
+        with DbHandler() as db:
+            dbTransactions = db.query(models.Transactions).all()
+        return dbTransactions
+
+    
     def readTransactionByID(self, id: str):
         with DbHandler() as db:
             dbTransaction = db.query(models.Transactions).get(id)

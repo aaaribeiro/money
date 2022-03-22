@@ -28,7 +28,7 @@ class Transactions(Base):
     # checknum = Column(String)
     # type = Column(Integer)
     date = Column(Date)
-    amount = Column(Float)
+    amount = Column(Integer)
     memo = Column(String)
     account = relationship("Accounts", back_populates="transactions")
     # category = relationship("Categories", back_populates="transactions")

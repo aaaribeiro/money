@@ -1,7 +1,7 @@
 import click
+import requests
 from ofxparse import OfxParser
 
-from database import db
 from database.crud import (
   CRUDAccount,
   CRUDTransaction,
@@ -9,10 +9,6 @@ from database.crud import (
 )
 from application import schemas
 from utils import hash
-from utils.handler import DbHandler
-# import requests
-# import click
-
 
 # URL = "https://api.organizze.com.br/rest/v2/transactions"
 # PASSWORD = "ribeirolimand@gmail.com"
@@ -108,6 +104,30 @@ def importdb(filename):
       if not dbTransaction:
         crud.createTransaction(transaction)
   click.echo("Completed")
+
+
+
+@main.command()
+def syncdb():
+  crud = CRUDTransaction
+  transactions = crud.readTransactions()
+  url = "https://api.organizze.com.br/rest/v2/transactions"
+  username = "ribeirolimand@gmail.com"
+  apiKey = "eb5fa9f870e9ecee79cd56bc61d701d639a2dee0"
+  with click.progressbar(transactions,
+                       label="Syncing transactions in cloud",
+                       length=len(transactions)) as bar:
+    for transaction in bar:
+      payload = {
+        "description": transaction.memo,
+        "date": str(transaction.date),
+        "paid": False,
+        "amount_cents": 20050,
+        "notes": transaction.id,
+  }
+      request = requests.post(url, auth=(username, apiKey), json=payload)
+
+
 
 
 if __name__ == "__main__":
