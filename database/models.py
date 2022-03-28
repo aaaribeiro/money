@@ -16,6 +16,7 @@ class Accounts(Base):
     id = Column(String, primary_key=True, index=True)
     type_id = Column(ForeignKey("types.id"))
     name = Column(String)
+    # organizze_id = Column(int)
     transactions = relationship("Transactions", back_populates="account")
     type = relationship("Types", back_populates="accounts")  
     

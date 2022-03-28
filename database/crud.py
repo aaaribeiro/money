@@ -1,3 +1,4 @@
+from unicodedata import category
 from sqlalchemy.orm import Session
 
 from database import models
@@ -14,6 +15,14 @@ class CRUDAccount:
         with DbHandler() as db:
             dbAccount = db.query(models.Accounts).get(id)
         return dbAccount
+
+
+    def readAccountByType(self, type: str):
+        with DbHandler() as db:
+            dbAccounts = db.query(models.Accounts).\
+                filter(models.Accounts.type.has(models.Types.name==type)).\
+                all()
+        return dbAccounts
 
 
     def createAccount(self, payload: schemas.AccountBase):

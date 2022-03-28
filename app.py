@@ -10,6 +10,10 @@ from database.crud import (
 from application import schemas
 from utils import hash
 
+URL = "https://api.organizze.com.br/rest/v2"
+USERNAME = "ribeirolimand@gmail.com"
+APIKEY = "eb5fa9f870e9ecee79cd56bc61d701d639a2dee0"
+
 # URL = "https://api.organizze.com.br/rest/v2/transactions"
 # PASSWORD = "ribeirolimand@gmail.com"
 
@@ -46,7 +50,7 @@ def parseData(filename):
       id = transactionID.ID,
       account_id = accountID.ID,
       date = transaction.date,
-      amount = transaction.amount,
+      amount = f"{transaction.amount:.2f}".replace(".", ""),
       memo = transaction.memo,
     )
     listOfTransactions.append(transactionObject)  
@@ -106,8 +110,17 @@ def importdb(filename):
   click.echo("Completed")
 
 
+# def syncAccounts(ctx, param, value):
+#   url = f"{URL}/accounts"
+#   request = requests.get(url, auth=(USERNAME, APIKEY))
+#   print(request.json())
+#   ctx.exit()
+
+
 
 @main.command()
+# @click.option("--accounts", is_flag=True, callback=syncAccounts, 
+#                 expose_value=False)
 def syncdb():
   crud = CRUDTransaction
   transactions = crud.readTransactions()
@@ -122,11 +135,89 @@ def syncdb():
         "description": transaction.memo,
         "date": str(transaction.date),
         "paid": False,
-        "amount_cents": 20050,
+        "amount_cents": transaction.amount,
         "notes": transaction.id,
   }
       request = requests.post(url, auth=(username, apiKey), json=payload)
 
+
+def syncCreditCards(ctx, param, value):
+
+  url = f"{URL}/credit_cards"
+  result = requests.get(url, auth=(USERNAME, APIKEY))  
+
+  creditCardList = []
+  for creditCard in result.json():
+    creditCardList.append(creditCard["name"])
+  
+  crud = CRUDAccount()
+  dbCreditCards = crud.readAccountByType("CREDITCARD")
+  for creditCard in dbCreditCards:
+    if creditCard.id not in creditCardList:
+      click.echo("--> ", nl=None)
+      click.secho(creditCard.name.title(), fg="green")
+      cardNetwork = click.prompt("Card network")
+      dueDate = click.prompt("Due date")
+      closingDay = click.prompt("Closing day")
+      limit = int(click.prompt("Limit"))
+      payload = {
+          "name": creditCard.id,
+          "card_network": cardNetwork,
+          "due_day": dueDate,
+          "closing_day": closingDay,
+          "limit_cents": limit
+      }
+      result = requests.post(url, auth=(USERNAME, APIKEY), json=payload)
+      if result.status_code == 201:
+        click.echo("Credit card ", nl=None)
+        click.secho(f"{payload['name']}", fg="blue", nl=None)
+        click.echo(" created")
+  click.secho("All credit cards synced", fg="green")
+  ctx.exit()
+
+
+def syncAccounts(ctx, param, value):
+  
+  url = f"{URL}/accounts"
+  result = requests.get(url, auth=(USERNAME, APIKEY))  
+
+  accountList = []
+  for account in result.json():
+    accountList.append(account["name"])
+
+  crud = CRUDAccount()
+  dbAccounts = crud.readAccountByType("CC")
+  for account in dbAccounts:
+    if account.id not in accountList:
+      click.echo("--> ", nl=None)
+      click.secho(account.name.title(), fg="green")
+      payload = {
+        "name": account.id,
+        "type": "checking",
+        "description": account.id,
+        "default": False
+      }
+      result = requests.post(url, auth=(USERNAME, APIKEY), json=payload)
+      if result.status_code == 201:
+        click.echo("Account ")
+        click.secho(f"{payload['name']}", fg="blue")
+        click.echo(" created")  
+  click.secho("All accounts synced", fg="green")
+  ctx.exit()
+
+
+@main.command()
+@click.option("--accounts", is_flag=True, callback=syncAccounts, 
+                expose_value=False)
+@click.option("--credit-cards", is_flag=True, callback=syncCreditCards, 
+                expose_value=False)
+def syncdb():
+  pass
+  # crud = CRUDAccount()
+  # text = click.prompt("Category")
+  # dbAccounts = crud.readAccountByType(text)
+  # for account in dbAccounts:
+  #   print(dir(account))
 
 
 

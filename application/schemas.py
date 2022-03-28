@@ -18,7 +18,7 @@ class TransactionBase(BaseModel):
     # checknum: str
     # type: int
     date: date
-    amount: float
+    amount: int
     memo: str
 
     @validator("amount")
